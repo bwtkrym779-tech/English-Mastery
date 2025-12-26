@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ar">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>تعلم الإنجليزية — موقع تعليمي</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1 class="logo">مركز اللغة الإنجليزية</h1>
+      <nav class="nav" id="nav">
+        <a href="#home">الرئيسية</a>
+        <a href="#lessons">الدروس</a>
+        <a href="#about">عنّا</a>
+        <a href="#contact">تواصل</a>
+        <button id="menuBtn" class="menu-btn">☰</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="hero container">
+      <h2>تعلم الإنجليزية بثقة وسهولة</h2>
+      <p>دروس عملية، تمارين تفاعلية، ومصادر مجانية لمستويات مختلفة.</p>
+      <div class="cta">
+        <a href="#lessons" class="btn">ابدأ الآن</a>
+        <a href="#contact" class="btn ghost">انضم للنشرة</a>
+      </div>
+    </section>
+
+    <section id="lessons" class="container lessons">
+      <h3>نماذج دروس</h3>
+      <div class="lesson-cards">
+        <article class="card">
+          <h4>درس 1 — الحروف والأصوات</h4>
+          <p>مقدمة مبسطة لنطق الحروف وقواعد النطق الأساسية.</p>
+          <button class="open-lesson" data-lesson="1">عرض الدرس</button>
+        </article>
+        <article class="card">
+          <h4>درس 2 — أساسيات القواعد</h4>
+          <p>جملة بسيطة: الفاعل + الفعل + المفعول وكيفية تركيب الجملة.</p>
+          <button class="open-lesson" data-lesson="2">عرض الدرس</button>
+        </article>
+        <article class="card">
+          <h4>درس 3 — محادثات يومية</h4>
+          <p>عبارات قصيرة تستخدم في التحية، الطلب، والسؤال عن الأحوال.</p>
+          <button class="open-lesson" data-lesson="3">عرض الدرس</button>
+        </article>
+      </div>
+
+      <div id="lessonModal" class="modal">
+        <div class="modal-content">
+          <button id="closeModal" class="close">×</button>
+          <div id="lessonBody"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="container about">
+      <h3>عنّا</h3>
+      <p>نقدّم موارد منتقاة لتعليم اللغة الإنجليزية بطريقة مبسطة مناسبة للمبتدئين والمتقدمين.</p>
+    </section>
+
+    <section id="contact" class="container contact">
+      <h3>معلم ذكي AI</h3>
+      <p>اسأل أي سؤال عن اللغة الإنجليزية والمعلم AI سيساعدك:</p>
+      <div id="chatContainer" class="chat-box">
+        <div id="chatHistory" class="chat-history"></div>
+        <div class="chat-input-group">
+          <input type="text" id="userInput" placeholder="اكتب سؤالك بالعربية أو الإنجليزية..." />
+          <button id="sendBtn" class="btn">إرسال</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">© 2025 مركز اللغة الإنجليزية — جميع الحقوق محفوظة</div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
