@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Mastery</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .navbar {
+            padding: 15px 5%;
+        }
+        .nav-tabs {
+            display: flex;
+            gap: 25px;
+        }
+        body.dark-mode {
+            background-color: #020617;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(91, 58, 156, 0.2), transparent 40%), 
+                radial-gradient(circle at 85% 30%, rgba(14, 165, 233, 0.15), transparent 40%);
+            background-attachment: fixed;
+            color: #e2e8f0;
+            background-size: 200% 200%;
+            animation: gradientBG 20s ease infinite;
+        }
+        body.dark-mode .header {
+            background: rgba(2, 6, 23, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #1e293b;
+        }
+        body.dark-mode .tab {
+            color: #94a3b8;
+        }
+        .lesson-card {
+            transition: transform 0.1s ease-out, box-shadow 0.3s ease, border-color 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        .lesson-card:hover {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        @keyframes float3D {
+            0%, 100% { transform: perspective(1000px) rotateY(0deg) translateY(0); }
+            50% { transform: perspective(1000px) rotateY(10deg) translateY(-20px); }
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .hero-image {
+            animation: float3D 6s ease-in-out infinite;
+            transform-style: preserve-3d;
+        }
+    </style>
+</head>
+<body>
+    <!-- Reading Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="myBar"></div>
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo">English Mastery</div>
+            <div class="nav-tabs">
+                <a href="#home" class="tab active" data-i18n="nav.home">Home</a>
+                <a href="#lessons" class="tab" data-i18n="nav.lessons">Lessons</a>
+                <a href="#quiz" class="tab" data-i18n="nav.quiz">Quiz</a>
+                <a href="#stats" class="tab" data-i18n="nav.stats">Stats</a>
+                <button id="theme-toggle" class="theme-btn" aria-label="Toggle Dark Mode">🌙</button>
+                <button id="lang-toggle" class="theme-btn" aria-label="Toggle Language">🌐</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="hero-section">
+            <!-- Left Side: Image -->
+            <div class="hero-image-container">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23f0f8ff'/%3E%3Cpath d='M100 150 C100 150 150 130 200 150 C250 130 300 150 300 150 V250 C300 250 250 230 200 250 C150 230 100 250 100 250 Z' fill='%233498db'/%3E%3Cpath d='M200 150 V250' stroke='%232980b9' stroke-width='4'/%3E%3Crect x='120' y='170' width='60' height='5' fill='white' opacity='0.7'/%3E%3Crect x='120' y='190' width='60' height='5' fill='white' opacity='0.7'/%3E%3Crect x='220' y='170' width='60' height='5' fill='white' opacity='0.7'/%3E%3Crect x='220' y='190' width='60' height='5' fill='white' opacity='0.7'/%3E%3Ccircle cx='320' cy='100' r='30' fill='%23f1c40f' opacity='0.5'/%3E%3Ccircle cx='80' cy='300' r='20' fill='%232ecc71' opacity='0.5'/%3E%3C/svg%3E" alt="صورة تعليمية" class="hero-image">
+            </div>
+
+            <!-- Right Side: Content -->
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span data-i18n="hero.title">Learn English</span><br>
+                    <span class="highlight" data-i18n="hero.highlight">Smartly & Easily</span>
+                </h1>
+                
+                <p class="hero-description" data-i18n="hero.desc">
+                    Use the power of AI to improve your conversation and grammar skills.
+                    Professional lessons, accurate statistics, and a smart teacher available 24/7.
+                </p>
+
+                <div class="action-buttons">
+                    <button id="discover-btn" class="btn btn-secondary" data-i18n="hero.btn1">Discover Lessons</button>
+                    <button id="start-journey-btn" class="btn btn-primary" data-i18n="hero.btn2">Start Journey Now</button>
+                </div>
+
+                <div class="badge" data-i18n="hero.badge">500+ New Students</div>
+            </div>
+        </div>
+
+        <!-- Lessons Section -->
+        <section id="lessons" class="lessons-section">
+            <div class="lessons-header">
+                <div>
+                    <h2 class="lessons-title" data-i18n="lessons.title">Lesson Library</h2>
+                    <p class="lessons-subtitle" data-i18n="lessons.subtitle">Choose a lesson to start your learning journey</p>
+                </div>
+                <div class="search-box">
+                    <input type="text" id="lesson-search" placeholder="Search for a lesson or level..." data-i18n-placeholder="lessons.search">
+                    <span class="search-icon">🔍</span>
+                </div>
+            </div>
+
+            <div class="filter-container">
+                <button class="filter-btn active" data-filter="all" data-i18n="filter.all">All</button>
+                <button class="filter-btn" data-filter="grammar" data-i18n="filter.grammar">Grammar</button>
+                <button class="filter-btn" data-filter="vocabulary" data-i18n="filter.vocabulary">Vocabulary</button>
+                <button class="filter-btn" data-filter="skills" data-i18n="filter.skills">Skills</button>
+            </div>
+
+            <div class="lessons-grid">
+                <!-- Lesson Card 1 -->
+                <div class="lesson-card" data-lesson-id="business" data-category="skills">
+                    <div class="lesson-icon">💼</div>
+                    <h3 class="lesson-name" data-i18n="card.business.title">Professional Business Communication</h3>
+                    <p class="lesson-name-en">Business English</p>
+                    <p class="lesson-desc" data-i18n="card.business.desc">Develop business communication skills in the workplace.</p>
+                    <div class="lesson-footer">
+                        <a href="#" class="lesson-link" data-i18n="card.view">View Lesson</a>
+                        <span class="lesson-level" data-i18n="level.advanced">Advanced</span>
+                    </div>
+                </div>
+
+                <!-- Lesson Card 2 -->
+                <div class="lesson-card" data-lesson-id="auxiliary" data-category="grammar">
+                    <div class="lesson-icon">🔧</div>
+                    <h3 class="lesson-name" data-i18n="card.auxiliary.title">Understanding Auxiliary Verbs</h3>
+                    <p class="lesson-name-en">Grammar</p>
+                    <p class="lesson-desc" data-i18n="card.auxiliary.desc">Detailed explanation of using have, do, be, and will.</p>
+                    <div class="lesson-footer">
+                        <a href="#" class="lesson-link" data-i18n="card.view">View Lesson</a>
+                        <span class="lesson-level" data-i18n="level.intermediate">Intermediate</span>
+                    </div>
+                </div>
+
+                <!-- Lesson Card 3 -->
+                <div class="lesson-card" data-lesson-id="greetings" data-category="skills">
+                    <div class="lesson-icon">👋</div>
+                    <h3 class="lesson-name" data-i18n="card.greetings.title">Fundamentals of Greetings</h3>
+                    <p class="lesson-name-en">Basics</p>
+                    <p class="lesson-desc" data-i18n="card.greetings.desc">Learn how to greet and interact with others in English.</p>
+                    <div class="lesson-footer">
+                        <a href="#" class="lesson-link" data-i18n="card.view">View Lesson</a>
+                        <span class="lesson-level" data-i18n="level.beginner">Beginner</span>
+                    </div>
+                </div>
+
+                <!-- Lesson Card 4 -->
+                <div class="lesson-card" data-lesson-id="essay" data-category="skills">
+                    <div class="lesson-icon">✍️</div>
+                    <h3 class="lesson-name" data-i18n="card.essay.title">Academic Essay Composition</h3>
+                    <p class="lesson-name-en">Writing Skills</p>
+                    <p class="lesson-desc" data-i18n="card.essay.desc">Structured discussions for writing organized academic texts.</p>
+                    <div class="lesson-footer">
+                        <a href="#" class="lesson-link" data-i18n="card.view">View Lesson</a>
+                        <span class="lesson-level" data-i18n="level.advanced">Advanced</span>
+                    </div>
+                </div>
+
+                <!-- Lesson Card 5 -->
+                <div class="lesson-card" data-lesson-id="future" data-category="grammar">
+                    <div class="lesson-icon">🔮</div>
+                    <h3 class="lesson-name" data-i18n="card.future.title">Mastering the Future Simple</h3>
+                    <p class="lesson-name-en">Grammar</p>
+                    <p class="lesson-desc" data-i18n="card.future.desc">How to talk about your future plans using 'going to' and 'will'.</p>
+                    <div class="lesson-footer">
+                        <a href="#" class="lesson-link" data-i18n="card.view">View Lesson</a>
+                        <span class="lesson-level" data-i18n="level.intermediate">Intermediate</span>
+                    </div>
+                </div>
+
+                <!-- Lesson Card 6 -->
+                <div class="lesson-card" data-lesson-id="articles" data-category="grammar">
+                    <div class="lesson-icon">📚</div>
+                    <h3 class="lesson-name" data-i18n="card.articles.title">Definite & Indefinite Articles</h3>
+                    <p class="lesson-name-en">Grammar</p>
+                    <p class="lesson-desc" data-i18n="card.articles.desc">Basic rules for using 'a', 'an', and 'the'.</p>
+                    <div class="lesson-footer">
+                        <a href="#" class="lesson-link" data-i18n="card.view">View Lesson</a>
+                        <span class="lesson-level" data-i18n="level.beginner">Beginner</span>
+                    </div>
+                </div>
+
+                <!-- Lesson Card 7 -->
+                <div class="lesson-card" data-lesson-id="past" data-category="grammar">
+                    <div class="lesson-icon">🕰️</div>
+                    <h3 class="lesson-name" data-i18n="card.past.title">The Past Simple Tense</h3>
+                    <p class="lesson-name-en">Grammar</p>
+                    <p class="lesson-desc" data-i18n="card.past.desc">Learn how to talk about finished past events and verb conjugations.</p>
+                    <div class="lesson-footer">
+                        <a href="#" class="lesson-link" data-i18n="card.view">View Lesson</a>
+                        <span class="lesson-level" data-i18n="level.beginner">Beginner</span>
+                    </div>
+                </div>
+
+                <!-- Lesson Card 8 -->
+                <div class="lesson-card" data-lesson-id="travel" data-category="vocabulary">
+                    <div class="lesson-icon">✈️</div>
+                    <h3 class="lesson-name" data-i18n="card.travel.title">English for Travel & Tourism</h3>
+                    <p class="lesson-name-en">Vocabulary</p>
+                    <p class="lesson-desc" data-i18n="card.travel.desc">Essential words and phrases for traveling, airports, and hotels.</p>
+                    <div class="lesson-footer">
+                        <a href="#" class="lesson-link" data-i18n="card.view">View Lesson</a>
+                        <span class="lesson-level" data-i18n="level.intermediate">Intermediate</span>
+                    </div>
+                </div>
+
+                <!-- Lesson Card 9 -->
+                <div class="lesson-card" data-lesson-id="phrasal" data-category="vocabulary">
+                    <div class="lesson-icon">🔄</div>
+                    <h3 class="lesson-name" data-i18n="card.phrasal.title">Essential Phrasal Verbs</h3>
+                    <p class="lesson-name-en">Vocabulary</p>
+                    <p class="lesson-desc" data-i18n="card.phrasal.desc">Important phrasal verbs (get up, look for) used by native speakers.</p>
+                    <div class="lesson-footer">
+                        <a href="#" class="lesson-link" data-i18n="card.view">View Lesson</a>
+                        <span class="lesson-level" data-i18n="level.advanced">Advanced</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section id="stats" class="stats-section">
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-number" id="word-count">0</div>
+                    <div class="stat-label" data-i18n="stats.label">Words Learned</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="quiz-score-avg">0%</div>
+                    <div class="stat-label" data-i18n="stats.quizScore">Avg Quiz Score</div>
+                </div>
+                <div class="stat-card" style="width: 400px; max-width: 100%; padding: 20px;">
+                    <canvas id="progressChart"></canvas>
+                </div>
+            </div>
+
+            <div class="leaderboard-section">
+                <h3 data-i18n="stats.leaderboard">Leaderboard</h3>
+                <div class="leaderboard-container">
+                    <table class="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th data-i18n="leaderboard.rank">Rank</th>
+                                <th data-i18n="leaderboard.name">User</th>
+                                <th data-i18n="leaderboard.score">Score</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboard-body">
+                            <!-- Rows injected by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz Main Section -->
+        <section id="quiz" class="quiz-main-section" style="display: none;">
+            <div class="quiz-header">
+                <h2 data-i18n="quiz.mainTitle">Practice Quizzes</h2>
+                <p data-i18n="quiz.mainDesc">Test your knowledge with general English quizzes</p>
+            </div>
+            <div class="quiz-grid">
+                <div class="quiz-card">
+                    <div class="lesson-icon">📝</div>
+                    <h3 data-i18n="quiz.general">General Knowledge</h3>
+                    <p data-i18n="quiz.generalDesc">Test your overall English skills</p>
+                    <p id="general-quiz-highscore" style="font-size: 0.9rem; color: #0284c7; font-weight: bold; margin: 0.5rem 0; display: none;"></p>
+                    <button id="start-general-quiz-btn" class="btn btn-primary" style="margin-top: 1rem;" data-i18n="quiz.start">Start Quiz</button>
+                </div>
+            </div>
+            
+            <div id="general-quiz-container" style="display: none; max-width: 800px; margin: 0 auto;">
+                <h3 data-i18n="quiz.generalTitle">General English Quiz</h3>
+                <div id="general-quiz-questions"></div>
+                <button id="submit-general-quiz-btn" class="btn btn-primary" style="margin-top: 15px;" data-i18n="quiz.submit">Submit Answers</button>
+                <button id="retry-general-quiz-btn" class="btn btn-secondary" style="margin-top: 15px; display:none;" data-i18n="quiz.retry">Try Again</button>
+                <button id="close-general-quiz-btn" class="btn btn-secondary" style="margin-top: 15px; margin-left: 10px; display:none;" data-i18n="quiz.close">Close</button>
+                <div id="general-quiz-result" class="quiz-result"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Lesson Modal -->
+    <div id="lesson-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            
+            <!-- Summary View -->
+            <div id="modal-summary-view">
+                <div class="modal-header">
+                    <div id="modal-icon" class="modal-icon"></div>
+                    <div>
+                        <h2 id="modal-title"></h2>
+                        <p id="modal-subtitle"></p>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-level-badge">
+                        <span id="modal-level" class="badge"></span>
+                    </div>
+                    <p id="modal-desc"></p>
+                    <div class="modal-lesson-content">
+                        <h4 data-i18n="modal.content">Lesson Content:</h4>
+                        <ul id="modal-points"></ul>
+                    </div>
+                    <button id="start-lesson-btn" class="btn btn-primary" style="width: 100%; margin-top: 20px;" data-i18n="modal.start">Start Lesson</button>
+                </div>
+            </div>
+
+            <!-- Active Lesson View -->
+            <div id="modal-active-lesson-view" style="display:none;">
+                <div class="modal-header">
+                    <button id="back-to-summary" class="back-btn">➡️</button>
+                    <h3 class="modal-explanation-title" data-i18n="modal.explanation">Lesson Explanation</h3>
+                </div>
+
+                <div class="level-tabs">
+                    <button class="level-btn active" data-level="1" data-i18n="level.1">Level 1</button>
+                    <button class="level-btn" data-level="2" data-i18n="level.2">Level 2</button>
+                    <button class="level-btn" data-level="3" data-i18n="level.3">Level 3</button>
+                </div>
+
+                <div id="active-lesson-content">
+                    <!-- Content will be injected here -->
+                </div>
+
+                <button id="show-quiz-btn" class="btn btn-secondary" style="width: 100%; margin-top: 20px;" data-i18n="quiz.take">Take Quiz</button>
+                
+                <div id="quiz-section" class="quiz-section" style="display: none;">
+                    <h3 data-i18n="quiz.title">Quiz</h3>
+                    <div id="quiz-container"></div>
+                    <button id="submit-quiz-btn" class="btn btn-primary" style="margin-top: 15px;" data-i18n="quiz.submit">Submit Answers</button>
+                    <div id="quiz-result" class="quiz-result"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top-btn" aria-label="Back to Top" data-i18n-aria-label="common.backToTop">↑</button>
+
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const vocabulary = JSON.parse(localStorage.getItem('vocabulary')) || [];
+            document.getElementById('word-count').textContent = vocabulary.length;
+
+            // إعداد الرسم البياني
+            const ctx = document.getElementById('progressChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Current'],
+                    datasets: [{
+                        label: 'Words Acquired',
+                        data: [5, 12, 8, vocabulary.length], // بيانات افتراضية للأسابيع السابقة + العدد الحالي
+                        backgroundColor: ['#e0e0e0', '#e0e0e0', '#e0e0e0', '#3498db'],
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        title: { display: true, text: 'Weekly Progress' }
+                    },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
